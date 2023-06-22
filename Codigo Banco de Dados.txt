@@ -1,0 +1,46 @@
+CREATE DATABASE aluguel_veiculos_bd;
+
+SHOW DATABASES;
+
+USE aluguel_veiculos_bd;
+
+CREATE TABLE `carro` (
+`id` int unsigned NOT NULL auto_increment,
+`nome` varchar(50) NOT NULL,
+`cor` varchar(20) NOT NULL,
+`dta_ultima_revisao` datetime,
+`marca` varchar(15),
+`ano` varchar(4) NOT NULL,
+`completo` boolean,
+`tipo` varchar(20),
+primary key(id)
+);
+CREATE TABLE `grupo` (
+`id` int unsigned NOT NULL auto_increment,
+`valorDia` float NOT NULL,
+`anoCarroInicio` date NOT NULL,
+`anoCarroFinal` date,
+`completo` boolean,
+`tipo` varchar(50), 
+primary key(id)
+);
+
+SELECT * FROM grupo;
+SELECT * FROM carro;
+SELECT * FROM carro WHERE id = '2';
+
+UPDATE carro
+SET ano = "2020"
+WHERE id = 1 and ano = "2019";
+
+DELETE FROM carro WHERE id = 4;
+DELETE FROM grupo WHERE id = 1;
+
+INSERT INTO grupo (valorDia, anoCarroInicio, anoCarroFinal, completo, tipo)
+VALUES ("100", now(), now(), true, "Sedan"); 
+
+INSERT INTO carro (nome, cor, dta_ultima_revisao, marca, ano, completo, tipo)
+VALUES ("Onix PLUS", "Vermelho", now(), "Chevrolet", "2019", true, "Sedan"); 
+
+INSERT INTO carro (nome, cor, dta_ultima_revisao, marca, ano, completo, tipo)
+VALUES ("Cayenne", "Vermelho", now(), "Porsche", "2019", true, "SUV"); 
