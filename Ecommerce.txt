@@ -1,0 +1,92 @@
+CREATE DATABASE Ecommerce;
+
+USE Ecommerce;
+
+CREATE TABLE `endereco` (
+`id` int unsigned NOT NULL auto_increment,
+`UF` varchar(50) NOT NULL,
+`logradouro` varchar(50) NOT NULL,
+`NumeroDaCasa` int NOT NULL,
+`complemento` varchar(50) NOT NULL,
+`cep` varchar(9) NOT NULL,
+primary key(id)
+);
+
+CREATE TABLE `usuario`(
+`id` int unsigned NOT NULL auto_increment,
+`nome` varchar(50) NOT NULL,
+`senha` varchar(50) NOT NULL,
+`confSenha` bool,
+`email` varchar(70) NOT NULL,
+`cpf` varchar(14) NOT NULL,
+`dataNasc` date NOT NULL,
+primary key(id),
+`id_endereco` int unsigned NOT NULL,
+foreign key(id_endereco) references endereco(id)
+);
+
+CREATE TABLE `login`(
+`id` int unsigned NOT NULL auto_increment,
+`usuario` varchar(50) NOT NULL,
+`senha` varchar(50) NOT NULL,
+`confSenha` bool,
+primary key(id),
+`id_usuario` int unsigned NOT NULL,
+foreign key(id_usuario) references usuario(id)
+);
+
+CREATE TABLE `produto`(
+`id` int unsigned NOT NULL auto_increment,
+`nome` varchar(50) NOT NULL,
+`preco` float NOT NULL,
+`descricao` varchar(50),
+`estoque` int NOT NULL,
+primary key(id)
+);
+
+CREATE TABLE `carrinho`(
+`id` int unsigned NOT NULL auto_increment,
+`frete` float NOT NULL,
+`desconto` float NOT NULL,
+`valorFinal` float,
+primary key(id),
+`id_produto` int unsigned NOT NULL,
+foreign key(id_produto) references produto(id)
+);
+
+CREATE TABLE `Loja`(
+`id` int unsigned NOT NULL auto_increment,
+`nome` varchar(50) NOT NULL,
+`cnpj` varchar(18) NOT NULL,
+primary key(id)
+);
+
+
+CREATE TABLE `metodoPagamento`(
+`id` int unsigned NOT NULL auto_increment,
+`metodo_de_pagamento` varchar(50) NOT NULL,
+`valorFinal` float NOT NULL,
+primary key(id)
+);
+
+INSERT INTO endereco (UF, logradouro, NumeroDaCasa, complemento, cep)
+VALUES ("Santa Catarina", "tres rios", "43", "atras do posto", "75829-833");
+
+INSERT INTO usuario (nome, senha, confSenha, email, cpf, dataNasc, id_endereco)
+VALUES ("bino", "senhaforte", true, "bernardo@gmail.com", "345.324.534-34", now(), 1);
+
+INSERT INTO produto (nome, preco, descricao, estoque)
+VALUES ("prato", "10.40", "é branco", "10");
+
+INSERT INTO carrinho (frete, desconto, valorFinal, id_produto)
+VALUES ("100.40", " 10.40", "110.00", 1);
+
+INSERT INTO loja (nome, cnpj)
+VALUES ("Amazon", "123456789123456789");
+
+INSERT INTO metodoPagamento (metodo_de_pagamento, valorFinal)
+VALUES ("PIX", "110.00");
+
+SELECT *
+FROM carrinho as A
+INNER JOIN metodoPagamento as B ON 	A.id = B.id;
