@@ -1,0 +1,102 @@
+CREATE DATABASE livraria;
+
+USE livraria;
+
+CREATE TABLE `usuario` (
+`id` int unsigned NOT NULL auto_increment,
+`nome` varchar(70) NOT NULL,
+`cpf` varchar(14) NOT NULL,
+`dataNascimento` date NOT NULL,
+`dataRegistro` date NOT NULL,
+`login` varchar(40) NOT NULL,
+`senha` varchar(40) NOT NULL,
+primary key(id)
+);
+
+CREATE TABLE `endereco` (
+`id` int unsigned NOT NULL auto_increment,
+`rua` varchar(70) NOT NULL,
+`bairro` varchar(50) NOT NULL,
+`cep` varchar(20) NOT NULL,
+`id_usuario` int unsigned NOT NULL, 
+primary key(id),
+foreign key(id_usuario) references usuario(id)
+);
+
+CREATE TABLE `contato` (
+`id` int unsigned NOT NULL auto_increment,
+`email` varchar(70) NOT NULL,
+`telefone` varchar(14) NOT NULL,
+`id_usuario` int unsigned NOT NULL, 
+primary key(id),
+foreign key(id_usuario) references usuario(id)
+);
+
+CREATE TABLE `carrinho` (
+`id` int unsigned NOT NULL auto_increment,
+`valorTotal` float NOT NULL,
+`id_usuario` int unsigned NOT NULL, 
+primary key(id),
+foreign key(id_usuario) references usuario(id)
+);
+
+CREATE TABLE `livro` (
+`id` int unsigned NOT NULL auto_increment,
+`titulo` varchar(70) NOT NULL,
+`editora` varchar(70) NOT NULL,
+`preco` float NOT NULL,
+`dataPublicacao` date NOT NULL,
+`quantidadePaginas` int NOT NULL,
+primary key(id)
+);
+
+CREATE TABLE `carrinhoLivro` (
+`id` int unsigned NOT NULL auto_increment,
+`id_carrinho` int unsigned NOT NULL, 
+`id_livro` int unsigned NOT NULL, 
+primary key(id),
+foreign key(id_carrinho) references carrinho(id),
+foreign key(id_livro) references livro(id)
+);
+
+CREATE TABLE `autor` (
+`id` int unsigned NOT NULL auto_increment,
+`nome` varchar(70) NOT NULL,
+`nacionalidade` varchar(30) NOT NULL,
+`dataNascimento` date NOT NULL,
+`cpf` varchar(14) NOT NULL,
+primary key(id)
+);
+
+CREATE TABLE `autorLivro` (
+`id` int unsigned NOT NULL auto_increment,
+`id_autor` int unsigned NOT NULL, 
+`id_livro` int unsigned NOT NULL, 
+primary key(id),
+foreign key(id_autor) references autor(id),
+foreign key(id_livro) references livro(id)
+);
+
+INSERT INTO usuario (nome, cpf, dataNascimento, dataRegistro, login, senha)
+VALUES ("Bernardo", "123.123.123-12", now(), now(), "bino", "senha");
+
+INSERT INTO endereco (rua, bairro, cep, id_usuario)
+VALUES ("sao cristovao e nevis", "camboja", "123456789", 1);
+
+INSERT INTO contato (email, telefone, id_usuario)
+VALUES ("bernardo@gmail.com", "453234498", 1);
+
+INSERT INTO carrinho (valorTotal, id_usuario)
+VALUES ("100.00", 1);
+
+INSERT INTO livro (titulo, editora, preco, dataPublicacao, quantidadePaginas)
+VALUES ("O Senhor dos Anéis", "Allen & Unwin", "150.00", now(), "500");
+
+INSERT INTO autor (nome, nacionalidade, dataNascimento, cpf)
+VALUES ("J. R. R. Tolkien", "britânico", now(), "123.123.123-23");
+
+INSERT INTO carrinhoLivro (id_carrinho, id_livro)
+VALUES (2, 2);
+
+INSERT INTO autorLivro (id_autor, id_livro)
+VALUES (1, 1);
