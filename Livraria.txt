@@ -100,3 +100,15 @@ VALUES (2, 2);
 
 INSERT INTO autorLivro (id_autor, id_livro)
 VALUES (1, 1);
+
+UPDATE usuario
+SET nome = "Clébler"
+WHERE id = 1;
+
+UPDATE endereco
+SET rua = "Luiz inacio da Silva"
+WHERE id = 1;
+
+DELETE FROM usuario WHERE id = 2;
+
+DELETE FROM endereco WHERE id  = 1;
